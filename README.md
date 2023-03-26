@@ -24,4 +24,5 @@ GET api/get/user
 
 Response
 
-webapp Screenshot 2023-03-26 .png
+![webapp Screenshot 2023-03-26 ](https://user-images.githubusercontent.com/102968216/227775842-4055183d-4d45-4bc1-96ab-0693c51c0fe6.png)
+
