@@ -46,7 +46,6 @@ const Form = () => {
                 })
 
             let res = await axios.get("http://localhost:4000/api/get/user")
-            // console.log("user", res.data.user)
             await setName(res.data.user)
 
             setUserInput({ name: "", value: "" })
