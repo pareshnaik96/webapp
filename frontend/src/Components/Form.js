@@ -5,13 +5,16 @@ import List from './List'
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+
 const Form = () => {
     const [userInput, setUserInput] = useState({
         name: "",
         value: "",
     })
-    const [temp, setTemp] = useState('')
     const [name, setName] = useState('')
+    const [closest, setClosest] = useState('')
+    const [temp, setTemp] = useState('')
+
 
     const handlerChange = (event) => {
         const { name, value } = event.target
@@ -25,33 +28,29 @@ const Form = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+
         const { name, value } = userInput
         if (name && value) {
-            let response = await axios.get(`http://localhost:4000/api/get?city=${userInput.value}`)
-            await setTemp(response.data.temp)
-
-            await setUserInput((st) => {
-                return {
-                    ...st,
-                    temp
-                }
-            })
-
             await axios.post("http://localhost:4000/api/post", userInput)
                 .then((res) => {
                     toast.success("Success", { position: toast.POSITION.TOP_CENTER });
                 })
                 .catch((err) => {
-                    toast.error(err.response)
+                    toast.error(err)
                 })
 
-            let res = await axios.get("http://localhost:4000/api/get/user")
-            await setName(res.data.user)
+            let response = await axios.get("http://localhost:4000/api/get")
+            setName(response.data.name)
+            setClosest(response.data.closest)
+            setTemp(response.data.temperature)
+
 
             setUserInput({ name: "", value: "" })
+
         } else {
-            toast.error("Enter the required fields", { position: toast.POSITION.TOP_CENTER })
+            toast.error("Error", { position: toast.POSITION.TOP_CENTER });
         }
+
     }
 
 
@@ -68,7 +67,7 @@ const Form = () => {
                 </div>
                 <ToastContainer></ToastContainer>
             </form>
-            <List name={name} temp={temp.temperature} city={temp.city} />
+            <List name={name} closest={closest} temp={temp} />
         </div>
     )
 }
