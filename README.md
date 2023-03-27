@@ -19,4 +19,5 @@ GET /api/get
 
 Response
 
-webapp_screenshot 2023-03-27 213944.png
+![webapp_screenshot 2023-03-27 213944](https://user-images.githubusercontent.com/102968216/228041835-9c6f49ce-dac7-40fa-b7ff-e6ab30077930.png)
+
