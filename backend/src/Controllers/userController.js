@@ -15,54 +15,56 @@ const postUser = (req, res) => {
 }
 
 
-//=================================== get temp controller  =========================================================================//
+//=================================== get closest values controller  =========================================================================//
 
+const getValues = async (req, res) => {
 
-const getData = async (req, res) => {
+    function findClosest(numbers, target) {
+        let closest = numbers[0]
+        let diff = Infinity
+        for (let i = 1; i < numbers.length; i++) {
+            let val = numbers[i] - target
+            if (val < diff) {
+                closest = numbers[i]
+                diff = val
+            }
+        }
+
+        return closest;
+    }
+
+    let name
+    let values
+    con.query('SELECT * FROM user', (error, result) => {
+
+        if (result) {
+            let currUser = result.slice(-1)
+            let obj = currUser[0]
+            name = Object.values(obj)[1]
+
+            let data = result.slice(-1)
+            let objvalue = data[0]
+            values = Object.values(objvalue)[2]
+
+        }
+
+        if (error) error;
+    })
 
     const url = `https://api.openweathermap.org/data/2.5/weather?q=delhi&appid=e4d5ec3699c27ec136f5379d54c203b8`;
     let kelvin = 273
 
-    try {
-        const response = await axios.get(url);
-        let temperature = Math.floor(response.data.main.temp - kelvin)
-        let city = response.data.name
-
-        let weatherData = { temperature, city }
-
-        return res.status(200).send({ status: true, message: "Weather data access successfully", temp: weatherData });
-
-    } catch (error) {
-        return res.status(500).send({ status: false, message: 'Error fetching weather data' });
-    }
-
-};
+    const response = await axios.get(url);
+    let temperature = Math.floor(response.data.main.temp - kelvin) + "°C"
 
 
-//=========================================== get user controller ========================================================================//
+    let closest = findClosest(values.split(","), temperature)
+
+    return res.status(200).send({ status: true, message: "temp data access successfully", name, closest, temperature });
 
 
-// const getUser = (req, res) => {
-
-//     con.query('SELECT * FROM user', (error, result) => {
-
-//         if (result) {
-//             let currUser = result.slice(-1)
-//             let obj = currUser[0]
-//             let name = Object.values(obj)[1]
-
-//             res.status(200).send({ status: false, message: "User name access successfully", user: name })
-//         }
-
-//         if (error) error;
-//     })
-// }
-
+}
 
 
 module.exports.postUser = postUser
-module.exports.getData = getData
-// module.exports.getUser = getUser
-
-//ay57QRHSalD3AhNFnx0Egki8sQSAP7C1
-
+module.exports.getValues = getValues
