@@ -6,7 +6,7 @@ const userController = require('../Controllers/userController')
 
 router.post('/api/post', userController.postUser)
 router.get('/api/get', userController.getData)
-router.get('/api/get/user', userController.getUser)
+// router.get('/api/get/user', userController.getUser)
 
 
 module.exports = router;
