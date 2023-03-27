@@ -14,15 +14,11 @@ POST /api/post
 
 GET /api/get
 
-- Fetching the data eg. temperature, and city from real-time API from Weather API.
-- Taking value from the body when even the user entered and sent it as a real-time API query.
-- After that fetch the temperature.
-
-GET api/get/user
-
-- Returns the current user name from database.
+- Fetching the data eg. temperature from real-time API from Weather API.
+- Comparing the temperature getting from real-time API and user entered values and return the closest value.
 
 Response
 
-![webapp Screenshot 2023-03-26 ](https://user-images.githubusercontent.com/102968216/227775842-4055183d-4d45-4bc1-96ab-0693c51c0fe6.png)
+![webapp_screenshot 2023-03-27 213944](https://user-images.githubusercontent.com/102968216/228001288-e7e12478-7541-4eba-85d3-4f7805447b49.png)
+
 
