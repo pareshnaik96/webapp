@@ -22,9 +22,11 @@ const getValues = async (req, res) => {
     function findClosest(numbers, target) {
         let closest = numbers[0]
         let diff = Infinity
-        for (let i = 1; i < numbers.length; i++) {
-            let val = numbers[i] - target
-            if (val < diff) {
+        for (let i = 0; i < numbers.length; i++) {
+            let val = Math.abs(numbers[i] - target)
+            if (numbers[i] == target) {
+                closest = target
+            } else if (val < diff) {
                 closest = numbers[i]
                 diff = val
             }
@@ -55,10 +57,10 @@ const getValues = async (req, res) => {
     let kelvin = 273
 
     const response = await axios.get(url);
-    let temperature = Math.floor(response.data.main.temp - kelvin) + "°C"
+    let temp = Math.floor(response.data.main.temp - kelvin)
+    let temperature = temp + "°C"
 
-
-    let closest = findClosest(values.split(","), temperature)
+    let closest = findClosest(values.split(","), temp)
 
     return res.status(200).send({ status: true, message: "temp data access successfully", name, closest, temperature });
 
