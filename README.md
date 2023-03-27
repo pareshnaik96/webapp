@@ -1,2 +1,2 @@
-# Weather APP
+# Weather App
 
